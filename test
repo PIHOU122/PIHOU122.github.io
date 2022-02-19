@@ -1,0 +1,67 @@
+#include<iostream>
+using namespace std;
+#include<ctime>
+struct student
+{
+	string name;
+	int score;
+};
+struct teacher
+{
+	string name;
+	student stu[5];
+};
+//创建一个函数给老师和学生赋值
+void allocateSpace(teacher arr[],int len,int len1)
+{
+	string nameseed = "ABCDE";
+	//给老师进行属性赋值
+	for (int i = 0;i < len;i++)
+	{
+		arr[i].name = "Teacher_";
+		arr[i].name += nameseed[i];
+		for (int j = 0;j < len1;j++)
+		{
+			arr[i].stu[j].name = "Student_";
+			arr[i].stu[j].name += nameseed[i]; 
+			int random = rand() % 61 + 40;
+			//rand() % 61 表示的是 （0,61）再加40，表示的是（40,101）
+			arr[i].stu[j].score = random;
+		}
+		
+	}
+}
+//打印所有信息
+void printInfo(teacher arr[], int len, int len1)
+{
+	for (int i = 0;i < len;i++)
+	{
+		cout << " Teacher's name " << arr[i].name << endl;
+		for (int j = 0;j < len1;j++)
+		{
+			cout << " \t Student's name: " << arr[i].stu[j].name 
+				<< " Score is: " << arr[i].stu[j].score << endl;
+		}
+	}
+	
+}
+
+int main()
+{
+	//随机数种子
+	srand((unsigned int)time(NULL));
+
+
+	//创建三名老师的数组
+	struct teacher tea[3];
+	int len = sizeof(tea) / sizeof(tea[0]);
+	
+	struct student stu[5];
+	int len1 = sizeof(stu) / sizeof(stu[0]);
+
+	allocateSpace(tea, len, len1);
+	printInfo(tea,len,len1);
+
+	system("pause");
+	return 0;
+}
